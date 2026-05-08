@@ -1,0 +1,22 @@
+# Android Studio / IntelliJ
+*.iml
+.idea/
+local.properties
+
+# Gradle / Kotlin cache
+.gradle/
+.gradle-user-home/
+.kotlin/
+build/
+app/build/
+
+# Native build
+.externalNativeBuild/
+.cxx/
+
+# Android build captures
+captures/
+
+# System files
+.DS_Store
+Thumbs.db
