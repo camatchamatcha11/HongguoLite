@@ -70,6 +70,7 @@ fun MainScreen() {
                 .fillMaxSize()
                 .padding(innerPadding)  // 重要：避免内容被底部 Tab 遮挡
         ) {
+            // TODO 4：定义每个路由对应的页面
             composable(Routes.HOME) {
                 TabPlaceholderPage(title = "首页页面")
             }
