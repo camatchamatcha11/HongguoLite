@@ -65,7 +65,7 @@ fun MainScreen() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.HOME,  // 默认起始页：首页
+            startDestination = Routes.HOME,  // 默认起始页：首页；返回栈的根
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)  // 重要：避免内容被底部 Tab 遮挡
