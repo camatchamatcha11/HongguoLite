@@ -8,7 +8,7 @@ import com.example.hongguolite.ui.MainScreen
 import com.example.hongguolite.ui.theme.HongguoLiteTheme
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {dd
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {

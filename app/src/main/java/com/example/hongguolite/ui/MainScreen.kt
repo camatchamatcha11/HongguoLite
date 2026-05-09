@@ -18,6 +18,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.hongguolite.navigation.Routes
 import com.example.hongguolite.ui.components.bottomTabs
+import PlaceholderScreen
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.CurrencyExchange
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.ShoppingCart
+import com.example.hongguolite.ui.screens.HomeScreen
 
 @Composable
 fun MainScreen() {
@@ -68,27 +76,36 @@ fun MainScreen() {
             startDestination = Routes.HOME,  // 默认起始页：首页
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)  // 重要：避免内容被底部 Tab 遮挡
+                .padding(innerPadding)
+            // 这里故意不再 padding(innerPadding)
+            // 原因：HomeScreen 是沉浸式首页，背景图和底部卡片需要靠近底部 Tab
+            // 如果继续使用 innerPadding，HomeScreen 的底部会被提前截断，导致“观看完整短剧”离 BottomTabs 太远
         ) {
             composable(Routes.HOME) {
-                TabPlaceholderPage(title = "首页页面")
+                HomeScreen(
+                    onSearchClick = {
+                        // 暂时弹个 Toast，搜索页 Module 3 才实现
+                        // 等 Module 3 改成 navController.navigate(Routes.SEARCH)
+                    }
+                )
             }
             composable(Routes.THEATER) {
-                TabPlaceholderPage(title = "剧场页面")
+                PlaceholderScreen(icon = Icons.Default.PlayArrow, title = "剧场页面")
             }
             composable(Routes.SHOP) {
-                TabPlaceholderPage(title = "商城页面")
+                PlaceholderScreen(icon = Icons.Default.ShoppingCart, title = "商城页面")
             }
             composable(Routes.EARN) {
-                TabPlaceholderPage(title = "赚钱页面")
+                PlaceholderScreen(icon = Icons.Default.CurrencyExchange, title = "赚钱页面")
             }
             composable(Routes.PROFILE) {
-                TabPlaceholderPage(title = "我的页面")
+                PlaceholderScreen(icon = Icons.Default.AccountCircle, title = "我的页面")
             }
         }
     }
 }
 
+/*
 @Composable
 private fun TabPlaceholderPage(title: String) {
     Box(
@@ -98,3 +115,4 @@ private fun TabPlaceholderPage(title: String) {
         Text(text = title)
     }
 }
+*/
