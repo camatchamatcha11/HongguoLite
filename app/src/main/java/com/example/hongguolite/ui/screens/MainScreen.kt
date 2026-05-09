@@ -1,6 +1,5 @@
-package com.example.hongguolite.ui
+package com.example.hongguolite.ui.screens
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -10,7 +9,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,14 +16,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.hongguolite.navigation.Routes
 import com.example.hongguolite.ui.components.bottomTabs
-import PlaceholderScreen
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CurrencyExchange
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.ShoppingCart
-import com.example.hongguolite.ui.screens.HomeScreen
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.ui.graphics.Color
+import com.example.hongguolite.ui.theme.HongguoRed
+import com.example.hongguolite.ui.theme.TabUnselectedGray
 
 @Composable
 fun MainScreen() {
@@ -57,6 +57,13 @@ fun MainScreen() {
                                 restoreState = true
                             }
                         },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = HongguoRed,
+                            selectedTextColor = HongguoRed,
+                            unselectedIconColor = TabUnselectedGray,
+                            unselectedTextColor = TabUnselectedGray,
+                            indicatorColor = Color.Transparent // Optional: remove the background pill if desired, or let it be default
+                        ),
                         icon = {
                             Icon(
                                 imageVector = tab.icon,
@@ -77,9 +84,6 @@ fun MainScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-            // 这里故意不再 padding(innerPadding)
-            // 原因：HomeScreen 是沉浸式首页，背景图和底部卡片需要靠近底部 Tab
-            // 如果继续使用 innerPadding，HomeScreen 的底部会被提前截断，导致“观看完整短剧”离 BottomTabs 太远
         ) {
             composable(Routes.HOME) {
                 HomeScreen(
@@ -105,14 +109,3 @@ fun MainScreen() {
     }
 }
 
-/*
-@Composable
-private fun TabPlaceholderPage(title: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = title)
-    }
-}
-*/
