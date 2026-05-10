@@ -13,3 +13,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val HongguoRed = Color(0xFFE6303C)  // 红果品牌红，从设计稿取的精确值
 val TabUnselectedGray = Color(0xFF9E9E9E)
+
