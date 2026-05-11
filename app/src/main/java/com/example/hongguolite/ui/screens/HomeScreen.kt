@@ -130,10 +130,10 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 14.dp, bottom = 90.dp)
-                .background(Color.Red.copy(alpha = 0.3f)),   // ← 临时染色,
+                .padding(end = 14.dp, bottom = 90.dp),
+//                .background(Color.Red.copy(alpha = 0.3f)),   // ← 临时染色,
             horizontalAlignment = Alignment.CenterHorizontally,
-            c = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
 
         ) {
             RightActionButton(

@@ -494,7 +494,7 @@ composable(Routes.THEATER) {
 
 ---
 
-## 子任务 2.3：DramaCard 组件设计 [强制 check-in]
+## 子任务 2.3：DramaCard 组件设计
 
 ### 做什么
 
@@ -513,7 +513,7 @@ composable(Routes.THEATER) {
 
 ### 步骤 1：先思考接口（在动手写代码前）
 
-先问自己 4 个问题，**不写代码，先在心里或纸上回答**：
+先问自己 4 个问题，**不写代码，先回答用户以下问题**：
 
 1. DramaCard 应该接收 `Drama` 对象，还是接收一堆零散字段（title、coverUrl 等）？为什么？
 2. 卡片被点击了，DramaCard 自己处理跳转，还是回调给父组件？
