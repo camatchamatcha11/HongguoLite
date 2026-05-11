@@ -20,8 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.hongguolite.data.mock.MockDramas
+import com.example.hongguolite.data.model.Drama
 import com.example.hongguolite.data.model.theaterTabs
 import com.example.hongguolite.ui.theme.HongguoLiteTheme
+
+const val FIND_DRAMA_TAB_INDEX = 0
 
 @Composable
 fun TheaterScreen(
@@ -56,11 +60,32 @@ fun TheaterScreen(
             },
         )
 
-        TheaterTabPlaceholder(
-            selectedTabIndex = selectedTabIndex,
-            modifier = Modifier.weight(1f)
-        )
+        when (selectedTabIndex) {
+            FIND_DRAMA_TAB_INDEX -> {
+                FindDramaContent(
+                    dramas = MockDramas.theaterList,
+                    onDramaClick = { drama ->
+                        showDramaPlaceholderToast(context, drama)
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            else -> {
+                TheaterTabPlaceholder(
+                    selectedTabIndex = selectedTabIndex,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
     }
+}
+
+private fun showDramaPlaceholderToast(
+    context: android.content.Context,
+    drama: Drama,
+) {
+    Toast.makeText(context, "${drama.title} 详情页暂未实现", Toast.LENGTH_SHORT).show()
 }
 
 @Composable
@@ -77,7 +102,7 @@ private fun TheaterTabPlaceholder(
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = if (selectedTabIndex == 0) {
+            text = if (selectedTabIndex == FIND_DRAMA_TAB_INDEX) {
                 "找剧内容将在子任务 2.4 接入"
             } else {
                 "$tabLabel 内容暂未实现"
