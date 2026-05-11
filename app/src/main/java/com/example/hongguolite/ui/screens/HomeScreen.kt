@@ -130,9 +130,11 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 14.dp, bottom = 90.dp),
+                .padding(end = 14.dp, bottom = 90.dp)
+                .background(Color.Red.copy(alpha = 0.3f)),   // ← 临时染色,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            c = Arrangement.spacedBy(16.dp)
+
         ) {
             RightActionButton(
                 icon = Icons.Default.Star,
@@ -289,5 +291,15 @@ fun HomeScreen(
                 )
             }
         }
+    }
+}
+
+@androidx.compose.ui.tooling.preview.Preview(showBackground = true, widthDp = 393, heightDp = 852)
+@Composable
+private fun HomeScreenPreview() {
+    com.example.hongguolite.ui.theme.HongguoLiteTheme(dynamicColor = false) {
+        HomeScreen(
+            onSearchClick = {}
+        )
     }
 }

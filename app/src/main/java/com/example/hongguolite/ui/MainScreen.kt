@@ -31,7 +31,7 @@ import com.example.hongguolite.ui.theme.TabUnselectedGray
 
 @Composable
 fun MainScreen() {
-    // 创建 NavController：rememberNavController 保证它在重组中保留
+    // 创建 NavController：rememberNavController 保证它在重组中保留(MainScrenn是composable函数)
     val navController = rememberNavController()
 
     // 监听当前路由，用于决定 Tab 的选中态
@@ -116,5 +116,13 @@ fun MainScreen() {
                 PlaceholderScreen(icon = Icons.Default.AccountCircle, title = "我的页面")
             }
         }
+    }
+}
+
+@androidx.compose.ui.tooling.preview.Preview(showBackground = true, widthDp = 393, heightDp = 852)
+@Composable
+private fun MainScreenPreview() {
+    com.example.hongguolite.ui.theme.HongguoLiteTheme(dynamicColor = false) {
+        MainScreen()
     }
 }
