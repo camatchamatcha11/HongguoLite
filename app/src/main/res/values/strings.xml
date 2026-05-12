@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">HongguoLite</string>
+    <string name="theater_filter">筛选</string>
+    <string name="theater_rank">排行榜</string>
+    <string name="theater_new_drama">新剧</string>
+    <string name="theater_reservation">预约</string>
+    <string name="theater_search_hint">我在精神病院学斩神</string>
+    <string name="theater_screenshot_search">截图识别短剧</string>
+    <string name="theater_screenshot_unimplemented">截图识别短剧暂未实现</string>
+    <string name="theater_filter_unimplemented">筛选暂未实现</string>
+    <string name="theater_new_drama_unimplemented">新剧筛选暂未实现</string>
+    <string name="theater_reservation_unimplemented">预约暂未实现</string>
+    <string name="theater_drama_detail_unimplemented">%1$s 详情页暂未实现</string>
+    <string name="theater_find_drama_placeholder">找剧内容将在子任务 2.4 接入</string>
+    <string name="theater_tab_unimplemented">%1$s 内容暂未实现</string>
+    <string name="main_shop_page">商城页面</string>
+    <string name="main_earn_page">赚钱页面</string>
+    <string name="main_profile_page">我的页面</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -16,10 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.hongguolite.R
 import com.example.hongguolite.data.mock.MockDramas
 import com.example.hongguolite.data.model.Drama
 import com.example.hongguolite.data.model.theaterTabs
@@ -32,38 +36,45 @@ fun TheaterScreen(
     onSearchBoxClick: () -> Unit,
     onRankClick: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: TheaterViewModel = viewModel(),
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     var selectedTabIndex by remember { mutableIntStateOf(0) }
+
+    val msgScreenshot = stringResource(id = R.string.theater_screenshot_unimplemented)
+    val msgFilter = stringResource(id = R.string.theater_filter_unimplemented)
+    val msgNewDrama = stringResource(id = R.string.theater_new_drama_unimplemented)
+    val msgReservation = stringResource(id = R.string.theater_reservation_unimplemented)
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFF7F7F7))
+            .background(com.example.hongguolite.ui.theme.TheaterPageBackground)
     ) {
         TheaterTopBar(
             selectedTabIndex = selectedTabIndex,
             onTabSelected = { selectedTabIndex = it },
             onSearchBoxClick = onSearchBoxClick,
             onScreenshotClick = {
-                Toast.makeText(context, "截图识别短剧暂未实现", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, msgScreenshot, Toast.LENGTH_SHORT).show()
             },
             onFilterClick = {
-                Toast.makeText(context, "筛选暂未实现", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, msgFilter, Toast.LENGTH_SHORT).show()
             },
             onRankClick = onRankClick,
             onNewDramaClick = {
-                Toast.makeText(context, "新剧筛选暂未实现", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, msgNewDrama, Toast.LENGTH_SHORT).show()
             },
             onReservationClick = {
-                Toast.makeText(context, "预约暂未实现", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, msgReservation, Toast.LENGTH_SHORT).show()
             },
         )
 
         when (selectedTabIndex) {
             FIND_DRAMA_TAB_INDEX -> {
                 FindDramaContent(
-                    dramas = MockDramas.theaterList,
+                    dramas = uiState.dramas,
                     onDramaClick = { drama ->
                         showDramaPlaceholderToast(context, drama)
                     },
@@ -85,7 +96,8 @@ private fun showDramaPlaceholderToast(
     context: android.content.Context,
     drama: Drama,
 ) {
-    Toast.makeText(context, "${drama.title} 详情页暂未实现", Toast.LENGTH_SHORT).show()
+    val message = context.getString(R.string.theater_drama_detail_unimplemented, drama.title)
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 @Composable
@@ -94,6 +106,11 @@ private fun TheaterTabPlaceholder(
     modifier: Modifier = Modifier,
 ) {
     val tabLabel = theaterTabs.getOrNull(selectedTabIndex)?.label.orEmpty()
+    val placeholderText = if (selectedTabIndex == FIND_DRAMA_TAB_INDEX) {
+        stringResource(id = R.string.theater_find_drama_placeholder)
+    } else {
+        stringResource(id = R.string.theater_tab_unimplemented, tabLabel)
+    }
 
     Box(
         modifier = modifier
@@ -102,12 +119,8 @@ private fun TheaterTabPlaceholder(
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = if (selectedTabIndex == FIND_DRAMA_TAB_INDEX) {
-                "找剧内容将在子任务 2.4 接入"
-            } else {
-                "$tabLabel 内容暂未实现"
-            },
-            color = Color(0xFF999999),
+            text = placeholderText,
+            color = com.example.hongguolite.ui.theme.TheaterPlaceholderTextGray,
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium
         )

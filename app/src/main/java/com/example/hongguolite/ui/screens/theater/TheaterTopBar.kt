@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,11 +41,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hongguolite.data.model.theaterTabs
 import com.example.hongguolite.ui.theme.HongguoLiteTheme
+import com.example.hongguolite.ui.theme.TheaterFilterBackground
+import com.example.hongguolite.ui.theme.TheaterNewDramaBackground
+import com.example.hongguolite.ui.theme.TheaterRankBackground
+import com.example.hongguolite.ui.theme.TheaterReservationBackground
+import com.example.hongguolite.R
 
 private val TheaterOrange = Color(0xFFFF7A1A)
 private val TheaterTextPrimary = Color(0xFF1F1F1F)
 private val TheaterTextSecondary = Color(0xFF8A8A8A)
-private val TheaterPageBackground = Color(0xFFF7F7F7)
 
 @Composable
 fun TheaterTopBar(
@@ -63,7 +68,7 @@ fun TheaterTopBar(
             .fillMaxWidth()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(Color(0xFFEAFBFA), TheaterPageBackground),
+                    colors = listOf(Color(0xFFEAFBFA), com.example.hongguolite.ui.theme.TheaterPageBackground),
                 )
             )
             .padding(top = 10.dp, bottom = 8.dp)
@@ -111,13 +116,13 @@ private fun TheaterSearchRow(
         ) {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "搜索",
+                contentDescription = stringResource(id = R.string.theater_search_hint),
                 tint = Color(0xFF9C9C9C),
                 modifier = Modifier.size(23.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "我在精神病院学斩神",
+                text = stringResource(id = R.string.theater_search_hint),
                 color = Color(0xFF8C8C8C),
                 fontSize = 18.sp,
                 maxLines = 1,
@@ -142,13 +147,13 @@ private fun TheaterSearchRow(
         ) {
             Icon(
                 imageVector = Icons.Default.CameraAlt,
-                contentDescription = "截图识别短剧",
+                contentDescription = stringResource(id = R.string.theater_screenshot_search),
                 tint = Color(0xFF8C8C8C),
                 modifier = Modifier.size(23.dp)
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = "截图识别短剧",
+                text = stringResource(id = R.string.theater_screenshot_search),
                 color = Color(0xFF8C8C8C),
                 fontSize = 16.sp,
                 maxLines = 1
@@ -214,10 +219,10 @@ private fun TheaterQuickEntryRow(
             .padding(horizontal = 14.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        TheaterQuickEntry(Icons.Default.FilterList, "筛选", Color(0xFF7D63F3), onFilterClick, Modifier.weight(1f))
-        TheaterQuickEntry(Icons.Default.LocalFireDepartment, "排行榜", Color(0xFFFF8A24), onRankClick, Modifier.weight(1f))
-        TheaterQuickEntry(Icons.Default.PlayArrow, "新剧", Color(0xFF48C7C5), onNewDramaClick, Modifier.weight(1f))
-        TheaterQuickEntry(Icons.Default.Apps, "预约", Color(0xFFFFBD4A), onReservationClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.FilterList, stringResource(id = R.string.theater_filter), TheaterFilterBackground, onFilterClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.LocalFireDepartment, stringResource(id = R.string.theater_rank), TheaterRankBackground, onRankClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.PlayArrow, stringResource(id = R.string.theater_new_drama), TheaterNewDramaBackground, onNewDramaClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.Apps, stringResource(id = R.string.theater_reservation), TheaterReservationBackground, onReservationClick, Modifier.weight(1f))
     }
 }
 

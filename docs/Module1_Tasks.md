@@ -1,25 +1,24 @@
 # Module 1：项目骨架 + 底部 5 Tab + 占位页 + 首页静态版
 
-> **核心目标**：让 Demo 一打开就像个 App
-> **学习重点**：Compose 项目结构、Navigation Compose、Modifier 链式调用、状态栏处理
+> **预估时间**：1 - 1.5 天 **核心目标**：让 Demo 一打开就像个 App **学习重点**：Compose 项目结构、Navigation Compose、Modifier 链式调用、状态栏处理
 
----
+------
 
 ## 子任务总览
 
-| 子任务 | 内容 | Check-in |
-|---|---|---|
-| 1.1 | 创建项目 + 跑通 Hello World | ❌ |
-| 1.2 | 添加 Navigation 依赖 + 5 个空 Tab 切换 | ✅ 强制 |
-| 1.3 | Tier 3 占位页（商城/赚钱/我的） | ❌ |
-| 1.4 | 首页静态版（背景图 + 顶部图标） | ❌ |
-| 1.5 | 首页右侧悬浮按钮列 | ❌ |
-| 1.6 | 首页底部信息区 | ❌ |
-| 1.7 | 联调 + Git 提交 + 完整演示 | ✅ 强制 |
+| 子任务 | 内容                                   | 预估时间  | Check-in |
+| ------ | -------------------------------------- | --------- | -------- |
+| 1.1    | 创建项目 + 跑通 Hello World            | 30 min    | ✅ 强制   |
+| 1.2    | 添加 Navigation 依赖 + 5 个空 Tab 切换 | 1.5 - 2 h | ✅ 强制   |
+| 1.3    | Tier 3 占位页（商城/赚钱/我的）        | 30 min    | ❌        |
+| 1.4    | 首页静态版（背景图 + 顶部图标）        | 1 - 1.5 h | ❌        |
+| 1.5    | 首页右侧悬浮按钮列                     | 1 - 1.5 h | ❌        |
+| 1.6    | 首页底部信息区                         | 1.5 - 2 h | ❌        |
+| 1.7    | 联调 + Git 提交 + 完整演示             | 30 min    | ✅ 强制   |
 
----
+------
 
-## 子任务 1.1：创建项目
+## 子任务 1.1：创建项目 + 跑通 Hello World
 
 ### 做什么
 
@@ -46,15 +45,32 @@
 ### 完成后向我报告
 
 在对话里发：
+
 > 子任务 1.1 完成。
 
----
+我会让你截图项目结构（左侧 Project 面板的截图）。
+
+------
 
 ## 子任务 1.2：底部 5 Tab 导航
 
 ### 做什么
 
 实现 5 个底部 Tab：首页、剧场、商城、赚钱、我的。点击能切换。每个 Tab 暂时只显示一个 `Text` 占位。
+
+### 知识点（你需要先理解）
+
+1. **Navigation Compose**：Google 官方推荐的页面路由方案
+2. **NavController**：管理页面跳转的"控制器"
+3. **NavHost**：定义"哪个路由对应哪个页面"的容器
+4. **NavigationBar / NavigationBarItem**：Material3 的底部导航组件
+
+### 必须查阅的官方文档
+
+⚠️ **不要直接照抄我下面的代码！先去看官方文档，理解后再回来动手。**
+
+- [Compose 中的导航](https://developer.android.com/develop/ui/compose/navigation?hl=zh-cn)
+- [底部导航栏 NavigationBar](https://developer.android.com/develop/ui/compose/components/navigation-bar?hl=zh-cn)
 
 ### 步骤 1：添加依赖
 
@@ -64,6 +80,8 @@
 // Navigation Compose（自己去查最新版本号，不要硬编码我给的版本）
 implementation("androidx.navigation:navigation-compose:2.7.7")
 ```
+
+加完后点 Android Studio 顶部弹出的 **Sync Now**。
 
 ### 步骤 2：定义路由常量
 
@@ -212,6 +230,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 特别是 TODO 1 的路由跳转，**这是 Compose Navigation 最容易踩坑的地方**：
 
 新手坑预警：
+
 - 直接 `navController.navigate(route)` 会重复 push 同一个路由，按返回键时要按 5 次才能退出 App
 - 切换 Tab 时不处理栈状态，会导致返回键行为奇怪
 - 这两个问题官方文档里有标准答案，去查"Navigate to a destination from a bottom navigation bar"
@@ -229,7 +248,15 @@ override fun onCreate(savedInstanceState: Bundle?) {
 子任务 1.2 完成。
 ```
 
----
+我会让你：
+
+1. 截图 5 Tab 页面
+2. 把你的 `MainScreen.kt` 完整代码贴出来
+3. 回答两个问题：
+   - `launchSingleTop = true` 是什么作用？
+   - `popUpTo + saveState + restoreState` 三件套解决了什么问题？
+
+------
 
 ## 子任务 1.3：Tier 3 占位页
 
@@ -297,7 +324,7 @@ composable(Routes.SHOP) {
 - [ ] 切到商城/赚钱/我的，看到对应图标和文字
 - [ ] 三个页面样式一致
 
----
+------
 
 ## 子任务 1.4：首页静态版 - 背景图 + 顶部图标
 
@@ -425,7 +452,7 @@ composable(Routes.HOME) {
 - [ ] 点击汉堡，弹 Toast "侧边栏未实现"
 - [ ] 点击搜索，弹 Toast 或暂时不报错（搜索页待实现）
 
----
+------
 
 ## 子任务 1.5：首页右侧悬浮按钮列
 
@@ -463,7 +490,7 @@ implementation("androidx.compose.material:material-icons-extended:1.6.0")
 - [ ] 每个按钮有图标 + 数字
 - [ ] 整体不挡住中间的关键内容
 
----
+------
 
 ## 子任务 1.6：首页底部信息区
 
@@ -503,7 +530,7 @@ implementation("androidx.compose.material:material-icons-extended:1.6.0")
 - [ ] 整体看起来跟红果首页"差不多"（不要求像素级还原）
 - [ ] 文字超长正确省略，不会溢出屏幕
 
----
+------
 
 ## 子任务 1.7：联调 + Git 提交 + 完整演示
 
@@ -528,6 +555,7 @@ git commit -m "feat: 完成首页静态版（背景+悬浮按钮+底部信息区
 ### 完整演示
 
 打开 App，跑一遍完整流程：
+
 1. 启动 → 看到首页静态版
 2. 点击底部"剧场" → 看到剧场占位文字
 3. 点击底部"商城" → 看到商城占位
@@ -541,3 +569,24 @@ git commit -m "feat: 完成首页静态版（背景+悬浮按钮+底部信息区
 ```
 Module 1 全部完成。
 ```
+
+我会让你：
+
+1. 录一个 30 秒视频或多张截图展示完整流程
+2. 提一个改动需求当场实现（比如"把底部 Tab 选中色改成红色"）
+3. 解释你 `MainScreen.kt` 里某段代码
+
+------
+
+## Module 1 完成后你应该掌握的
+
+- [ ] Compose 项目的基本结构（res、kotlin、Manifest 各自的作用）
+- [ ] Navigation Compose 的核心 API（NavController、NavHost、composable）
+- [ ] 底部 Tab 切换的标准实现模式
+- [ ] `Box`、`Column`、`Row` 三大基础布局
+- [ ] `Modifier` 的链式调用
+- [ ] 本地图片资源的加载
+- [ ] data class 的使用
+- [ ] 学到了至少 1 个新的"新手坑"
+
+如果上面任何一项你不能用一两句话讲清楚，回去翻代码，确保你真的理解了，而不是抄通了。
