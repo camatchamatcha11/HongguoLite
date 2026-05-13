@@ -28,6 +28,13 @@ import androidx.compose.ui.unit.sp
 import com.example.hongguolite.ui.theme.HongguoLiteTheme
 import com.example.hongguolite.ui.theme.HongguoRed
 
+/**
+ * Temporary Module 3.1 search destination.
+ *
+ * Later subtasks will replace the placeholder body with pre-search, suggesting, and
+ * result states. Keeping this as a real route now lets Home/Theater navigation be
+ * tested before the full search UI exists.
+ */
 @Composable
 fun SearchScreen(
     onBackClick: () -> Unit,
@@ -43,6 +50,8 @@ fun SearchScreen(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            // The search page owns its own back affordance because it is not part of the
+            // bottom-tab navigation set.
             IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -51,6 +60,8 @@ fun SearchScreen(
                 )
             }
 
+            // Static shell matching the later search top bar shape. Subtasks 3.4-3.6 will
+            // wire this area to SearchViewModel state and text input events.
             Box(
                 modifier = Modifier
                     .weight(1f)

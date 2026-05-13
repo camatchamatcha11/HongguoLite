@@ -38,6 +38,9 @@ fun MainScreen() {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
+
+    // Only the five main product tabs show BottomNavigation. Search is entered from
+    // Home/Theater, so it behaves like a full-screen child page.
     val shouldShowBottomBar = bottomTabs.any { it.route == currentRoute }
 
     Scaffold(
@@ -90,6 +93,8 @@ fun MainScreen() {
             composable(Routes.HOME) {
                 HomeScreen(
                     onSearchClick = {
+                        // Home owns only the click event. MainScreen decides the concrete route
+                        // so route strings stay centralized in the navigation layer.
                         navController.navigate(Routes.SEARCH)
                     },
                 )
@@ -97,6 +102,8 @@ fun MainScreen() {
             composable(Routes.THEATER) {
                 TheaterScreen(
                     onSearchBoxClick = {
+                        // Theater's top search bar must open the shared search flow instead of
+                        // becoming an input field inside the theater page.
                         navController.navigate(Routes.SEARCH)
                     },
                     onRankClick = {
@@ -118,6 +125,7 @@ fun MainScreen() {
                 // destination is current.
                 SearchScreen(
                     onBackClick = {
+                        // popBackStack returns to whichever page opened search: Home or Theater.
                         navController.popBackStack()
                     },
                 )

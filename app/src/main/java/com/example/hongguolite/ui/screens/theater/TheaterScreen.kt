@@ -31,6 +31,14 @@ import com.example.hongguolite.ui.theme.HongguoLiteTheme
 
 const val FIND_DRAMA_TAB_INDEX = 0
 
+/**
+ * 剧场主界面 Composable。
+ * 包含顶部栏、Tab切换、内容区。
+ * @param onSearchBoxClick 搜索框点击回调
+ * @param onRankClick 排行榜入口点击回调
+ * @param modifier 外部修饰符
+ * @param viewModel 剧场页面ViewModel，默认自动注入
+ */
 @Composable
 fun TheaterScreen(
     onSearchBoxClick: () -> Unit,
@@ -38,10 +46,13 @@ fun TheaterScreen(
     modifier: Modifier = Modifier,
     viewModel: TheaterViewModel = viewModel(),
 ) {
+    // 订阅UI状态
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    // 当前选中的Tab索引，使用remember保存重组状态
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
+    // 各类未实现功能的提示文案
     val msgScreenshot = stringResource(id = R.string.theater_screenshot_unimplemented)
     val msgFilter = stringResource(id = R.string.theater_filter_unimplemented)
     val msgNewDrama = stringResource(id = R.string.theater_new_drama_unimplemented)
@@ -52,27 +63,34 @@ fun TheaterScreen(
             .fillMaxSize()
             .background(com.example.hongguolite.ui.theme.TheaterPageBackground)
     ) {
+        // 顶部栏，包含搜索、Tab、快捷入口
         TheaterTopBar(
             selectedTabIndex = selectedTabIndex,
             onTabSelected = { selectedTabIndex = it },
             onSearchBoxClick = onSearchBoxClick,
             onScreenshotClick = {
+                // 截图识别短剧，暂未实现
                 Toast.makeText(context, msgScreenshot, Toast.LENGTH_SHORT).show()
             },
             onFilterClick = {
+                // 筛选功能，暂未实现
                 Toast.makeText(context, msgFilter, Toast.LENGTH_SHORT).show()
             },
             onRankClick = onRankClick,
             onNewDramaClick = {
+                // 新剧入口，暂未实现
                 Toast.makeText(context, msgNewDrama, Toast.LENGTH_SHORT).show()
             },
             onReservationClick = {
+                // 预约入口，暂未实现
                 Toast.makeText(context, msgReservation, Toast.LENGTH_SHORT).show()
             },
         )
 
+        // 根据Tab切换内容区
         when (selectedTabIndex) {
             FIND_DRAMA_TAB_INDEX -> {
+                // “找剧”Tab，展示剧集内容
                 FindDramaContent(
                     dramas = uiState.dramas,
                     onDramaClick = { drama ->
@@ -83,6 +101,7 @@ fun TheaterScreen(
             }
 
             else -> {
+                // 其它Tab，显示占位内容
                 TheaterTabPlaceholder(
                     selectedTabIndex = selectedTabIndex,
                     modifier = Modifier.weight(1f)
@@ -92,6 +111,11 @@ fun TheaterScreen(
     }
 }
 
+/**
+ * 剧集点击时弹出未实现提示的工具方法
+ * @param context 上下文
+ * @param drama 剧集数据
+ */
 private fun showDramaPlaceholderToast(
     context: android.content.Context,
     drama: Drama,
@@ -100,6 +124,11 @@ private fun showDramaPlaceholderToast(
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
+/**
+ * Tab内容占位组件，未实现功能时显示提示文本
+ * @param selectedTabIndex 当前选中的Tab索引
+ * @param modifier 外部修饰符
+ */
 @Composable
 private fun TheaterTabPlaceholder(
     selectedTabIndex: Int,
@@ -127,6 +156,9 @@ private fun TheaterTabPlaceholder(
     }
 }
 
+/**
+ * 剧场主界面预览
+ */
 @Preview(showBackground = true, widthDp = 393, heightDp = 760)
 @Composable
 private fun TheaterScreenPreview() {

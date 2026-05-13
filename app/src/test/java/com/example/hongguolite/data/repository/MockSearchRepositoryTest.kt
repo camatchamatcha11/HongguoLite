@@ -42,6 +42,8 @@ class MockSearchRepositoryTest {
 
     @Test
     fun searchHistory_keepsLatestFirstAndDeduplicates() = runBlocking {
+        // This locks in the mobile-app convention: repeated searches move to the front
+        // instead of creating duplicate chips in the history area.
         repository.addSearchHistory(" first ")
         repository.addSearchHistory("second")
         repository.addSearchHistory("first")

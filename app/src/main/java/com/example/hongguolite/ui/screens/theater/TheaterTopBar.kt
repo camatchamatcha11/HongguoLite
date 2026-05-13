@@ -46,11 +46,24 @@ import com.example.hongguolite.ui.theme.TheaterNewDramaBackground
 import com.example.hongguolite.ui.theme.TheaterRankBackground
 import com.example.hongguolite.ui.theme.TheaterReservationBackground
 import com.example.hongguolite.R
+import com.example.hongguolite.ui.theme.TheaterPageBackground
 
 private val TheaterOrange = Color(0xFFFF7A1A)
 private val TheaterTextPrimary = Color(0xFF1F1F1F)
 private val TheaterTextSecondary = Color(0xFF8A8A8A)
 
+/**
+ * 剧场顶部栏 Composable，包含搜索框、频道Tab、快捷入口。
+ * @param selectedTabIndex 当前选中的Tab索引
+ * @param onTabSelected Tab切换回调
+ * @param onSearchBoxClick 搜索框点击回调
+ * @param onScreenshotClick 截图识别短剧点击回调
+ * @param onFilterClick 筛选入口点击回调
+ * @param onRankClick 排行榜入口点击回调
+ * @param onNewDramaClick 新剧入口点击回调
+ * @param onReservationClick 预约入口点击回调
+ * @param modifier 外部修饰符
+ */
 @Composable
 fun TheaterTopBar(
     selectedTabIndex: Int,
@@ -68,21 +81,24 @@ fun TheaterTopBar(
             .fillMaxWidth()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(Color(0xFFEAFBFA), com.example.hongguolite.ui.theme.TheaterPageBackground),
+                    colors = listOf(Color(0xFFEAFBFA), TheaterPageBackground),
                 )
             )
             .padding(top = 10.dp, bottom = 8.dp)
     ) {
+        // 搜索行
         TheaterSearchRow(
             onSearchBoxClick = onSearchBoxClick,
             onScreenshotClick = onScreenshotClick,
         )
 
+        // 频道Tab
         TheaterChannelTabs(
             selectedTabIndex = selectedTabIndex,
             onTabSelected = onTabSelected,
         )
 
+        // 快捷入口行
         TheaterQuickEntryRow(
             onFilterClick = onFilterClick,
             onRankClick = onRankClick,
@@ -92,6 +108,11 @@ fun TheaterTopBar(
     }
 }
 
+/**
+ * 剧场顶部搜索行，包含搜索框和截图识别入口。
+ * @param onSearchBoxClick 搜索框点击回调
+ * @param onScreenshotClick 截图识别短剧点击回调
+ */
 @Composable
 private fun TheaterSearchRow(
     onSearchBoxClick: () -> Unit,
@@ -106,6 +127,7 @@ private fun TheaterSearchRow(
             .background(Color.White.copy(alpha = 0.96f)),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // 左侧搜索框
         Row(
             modifier = Modifier
                 .weight(1f)
@@ -116,13 +138,13 @@ private fun TheaterSearchRow(
         ) {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = stringResource(id = R.string.theater_search_hint),
+                contentDescription = "搜索",
                 tint = Color(0xFF9C9C9C),
                 modifier = Modifier.size(23.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = stringResource(id = R.string.theater_search_hint),
+                text = "我在精神病院学斩神",
                 color = Color(0xFF8C8C8C),
                 fontSize = 18.sp,
                 maxLines = 1,
@@ -131,6 +153,7 @@ private fun TheaterSearchRow(
             )
         }
 
+        // 分割线
         Box(
             modifier = Modifier
                 .height(24.dp)
@@ -138,6 +161,7 @@ private fun TheaterSearchRow(
                 .background(Color(0xFFE8E8E8))
         )
 
+        // 右侧截图识别入口
         Row(
             modifier = Modifier
                 .height(46.dp)
@@ -147,13 +171,13 @@ private fun TheaterSearchRow(
         ) {
             Icon(
                 imageVector = Icons.Default.CameraAlt,
-                contentDescription = stringResource(id = R.string.theater_screenshot_search),
+                contentDescription = "截图识别短剧",
                 tint = Color(0xFF8C8C8C),
                 modifier = Modifier.size(23.dp)
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = stringResource(id = R.string.theater_screenshot_search),
+                text = "截图识别短剧",
                 color = Color(0xFF8C8C8C),
                 fontSize = 16.sp,
                 maxLines = 1
@@ -162,6 +186,11 @@ private fun TheaterSearchRow(
     }
 }
 
+/**
+ * 剧场频道Tab栏，支持横向滚动。
+ * @param selectedTabIndex 当前选中的Tab索引
+ * @param onTabSelected Tab切换回调
+ */
 @Composable
 private fun TheaterChannelTabs(
     selectedTabIndex: Int,
@@ -186,6 +215,7 @@ private fun TheaterChannelTabs(
             )
         }
     ) {
+        // 遍历所有Tab，渲染Tab项
         theaterTabs.forEachIndexed { index, tab ->
             val selected = index == selectedTabIndex
             Tab(
@@ -206,6 +236,13 @@ private fun TheaterChannelTabs(
     }
 }
 
+/**
+ * 剧场顶部快捷入口行，包含筛选、排行榜、新剧、预约。
+ * @param onFilterClick 筛选点击回调
+ * @param onRankClick 排行榜点击回调
+ * @param onNewDramaClick 新剧点击回调
+ * @param onReservationClick 预约点击回调
+ */
 @Composable
 private fun TheaterQuickEntryRow(
     onFilterClick: () -> Unit,
@@ -219,13 +256,22 @@ private fun TheaterQuickEntryRow(
             .padding(horizontal = 14.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        TheaterQuickEntry(Icons.Default.FilterList, stringResource(id = R.string.theater_filter), TheaterFilterBackground, onFilterClick, Modifier.weight(1f))
-        TheaterQuickEntry(Icons.Default.LocalFireDepartment, stringResource(id = R.string.theater_rank), TheaterRankBackground, onRankClick, Modifier.weight(1f))
-        TheaterQuickEntry(Icons.Default.PlayArrow, stringResource(id = R.string.theater_new_drama), TheaterNewDramaBackground, onNewDramaClick, Modifier.weight(1f))
-        TheaterQuickEntry(Icons.Default.Apps, stringResource(id = R.string.theater_reservation), TheaterReservationBackground, onReservationClick, Modifier.weight(1f))
+        // 筛选、排行榜、新剧、预约四个入口
+        TheaterQuickEntry(Icons.Default.FilterList, "筛选", Color(0xFF7D63F3), onFilterClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.LocalFireDepartment, "排行榜", Color(0xFFFF8A24), onRankClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.PlayArrow, "新剧", Color(0xFF48C7C5), onNewDramaClick, Modifier.weight(1f))
+        TheaterQuickEntry(Icons.Default.Apps, "预约", Color(0xFFFFBD4A), onReservationClick, Modifier.weight(1f))
     }
 }
 
+/**
+ * 快捷入口单元组件，带图标和文字。
+ * @param icon 图标
+ * @param label 文字标签
+ * @param iconBackground 图标背景色
+ * @param onClick 点击回调
+ * @param modifier 外部修饰符
+ */
 @Composable
 private fun TheaterQuickEntry(
     icon: ImageVector,
@@ -244,6 +290,7 @@ private fun TheaterQuickEntry(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
+        // 图标区域
         Box(
             modifier = Modifier
                 .size(28.dp)
@@ -259,6 +306,7 @@ private fun TheaterQuickEntry(
             )
         }
         Spacer(modifier = Modifier.width(4.dp))
+        // 文字标签
         Text(
             text = label,
             color = TheaterTextPrimary,
@@ -270,6 +318,9 @@ private fun TheaterQuickEntry(
     }
 }
 
+/**
+ * 剧场顶部栏预览
+ */
 @Preview(showBackground = true, widthDp = 393)
 @Composable
 private fun TheaterTopBarPreview() {

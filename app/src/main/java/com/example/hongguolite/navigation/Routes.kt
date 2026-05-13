@@ -8,5 +8,8 @@ object Routes {
     const val SHOP = "shop"
     const val EARN = "earn"
     const val PROFILE = "profile"
+
+    // Module 3 search is a non-tab destination. It is opened from Home/Theater
+    // entry points, then popped back to the previous page with the top-left back button.
     const val SEARCH = "search"
 }
