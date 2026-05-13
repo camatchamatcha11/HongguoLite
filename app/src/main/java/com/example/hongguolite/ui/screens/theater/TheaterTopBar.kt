@@ -236,18 +236,18 @@ private fun TheaterQuickEntry(
 ) {
     Row(
         modifier = modifier
-            .height(54.dp)
+            .height(44.dp)
             .clip(RoundedCornerShape(14.dp))
             .background(Color.White)
             .clickable(onClick = onClick)
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         Box(
             modifier = Modifier
-                .size(34.dp)
-                .clip(RoundedCornerShape(9.dp))
+                .size(28.dp)
+                .clip(RoundedCornerShape(10.dp))
                 .background(iconBackground),
             contentAlignment = Alignment.Center
         ) {
@@ -255,14 +255,14 @@ private fun TheaterQuickEntry(
                 imageVector = icon,
                 contentDescription = label,
                 tint = Color.White,
-                modifier = Modifier.size(22.dp)
+                modifier = Modifier.size(18.dp)
             )
         }
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = label,
             color = TheaterTextPrimary,
-            fontSize = 18.sp,
+            fontSize = 13.sp,
             fontWeight = FontWeight.Medium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

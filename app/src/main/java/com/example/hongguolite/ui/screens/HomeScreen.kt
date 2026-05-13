@@ -33,6 +33,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.hongguolite.ui.theme.HongguoLiteTheme
 
 @Composable
 fun GenreCapsule(text: String) {
@@ -294,10 +296,10 @@ fun HomeScreen(
     }
 }
 
-@androidx.compose.ui.tooling.preview.Preview(showBackground = true, widthDp = 393, heightDp = 852)
+@Preview(showBackground = true, widthDp = 393, heightDp = 852)
 @Composable
 private fun HomeScreenPreview() {
-    com.example.hongguolite.ui.theme.HongguoLiteTheme(dynamicColor = false) {
+    HongguoLiteTheme(dynamicColor = false) {
         HomeScreen(
             onSearchClick = {}
         )

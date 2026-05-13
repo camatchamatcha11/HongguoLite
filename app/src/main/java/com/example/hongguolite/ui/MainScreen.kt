@@ -2,127 +2,134 @@ package com.example.hongguolite.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.CurrencyExchange
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.hongguolite.navigation.Routes
 import com.example.hongguolite.ui.components.bottomTabs
-
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.CurrencyExchange
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.ui.graphics.Color
 import com.example.hongguolite.ui.screens.HomeScreen
 import com.example.hongguolite.ui.screens.PlaceholderScreen
+import com.example.hongguolite.ui.screens.search.SearchScreen
 import com.example.hongguolite.ui.screens.theater.TheaterScreen
+import com.example.hongguolite.ui.theme.HongguoLiteTheme
 import com.example.hongguolite.ui.theme.HongguoRed
 import com.example.hongguolite.ui.theme.TabUnselectedGray
 
 @Composable
 fun MainScreen() {
-    // 创建 NavController：rememberNavController 保证它在重组中保留(MainScrenn是composable函数)
+    // NavController owns the app route back stack. Keeping it here makes bottom tabs and
+    // non-tab pages share the same navigation graph.
     val navController = rememberNavController()
-
-    // 监听当前路由，用于决定 Tab 的选中态
-//    当 state.value 改变时，整个 Composable 函数会自动重新执行
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
+    val shouldShowBottomBar = bottomTabs.any { it.route == currentRoute }
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
-                bottomTabs.forEach { tab ->
-                    NavigationBarItem(
-                        selected = currentRoute == tab.route,
-                        onClick = {
-                            navController.navigate(tab.route) {
-                                // 回到主图的起点，避免 Tab 之间互相堆栈。
-                                // 否则连续点 5 个 Tab 后，返回键会在 Tab 历史里来回退。
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
+            if (shouldShowBottomBar) {
+                NavigationBar {
+                    bottomTabs.forEach { tab ->
+                        NavigationBarItem(
+                            selected = currentRoute == tab.route,
+                            onClick = {
+                                navController.navigate(tab.route) {
+                                    // Tab navigation should reuse the existing tab destinations instead of
+                                    // stacking duplicate Home/Theater/Shop pages on every tap.
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-
-                                // 重复点击当前 Tab 时不再创建第二个相同页面。
-                                launchSingleTop = true
-
-                                // 切回之前访问过的 Tab 时，尽量恢复它自己的状态。
-                                restoreState = true
-                            }
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = HongguoRed,
-                            selectedTextColor = HongguoRed,
-                            unselectedIconColor = TabUnselectedGray,
-                            unselectedTextColor = TabUnselectedGray,
-                            indicatorColor = Color.Transparent // Optional: remove the background pill if desired, or let it be default
-                        ),
-                        icon = {
-                            Icon(
-                                imageVector = tab.icon,
-                                contentDescription = tab.label
-                            )
-                        },
-                        label = {
-                            Text(text = tab.label)
-                        }
-                    )
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = HongguoRed,
+                                selectedTextColor = HongguoRed,
+                                unselectedIconColor = TabUnselectedGray,
+                                unselectedTextColor = TabUnselectedGray,
+                                indicatorColor = Color.Transparent,
+                            ),
+                            icon = {
+                                Icon(
+                                    imageVector = tab.icon,
+                                    contentDescription = tab.label,
+                                )
+                            },
+                            label = {
+                                Text(text = tab.label)
+                            },
+                        )
+                    }
                 }
             }
-        }
+        },
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.HOME,  // 默认起始页：首页
+            startDestination = Routes.HOME,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
         ) {
             composable(Routes.HOME) {
                 HomeScreen(
                     onSearchClick = {
-                        // 暂时弹个 Toast，搜索页 Module 3 才实现
-                        // 等 Module 3 改成 navController.navigate(Routes.SEARCH)
-                    }
+                        navController.navigate(Routes.SEARCH)
+                    },
                 )
             }
             composable(Routes.THEATER) {
                 TheaterScreen(
                     onSearchBoxClick = {
-                        // Module 3 接入后跳转搜索前置页。
+                        navController.navigate(Routes.SEARCH)
                     },
                     onRankClick = {
-                        // Module 4 接入后跳转榜单页。
-                    }
+                        // Module 4 will replace this placeholder with the rank route.
+                    },
                 )
             }
             composable(Routes.SHOP) {
-                PlaceholderScreen(icon = Icons.Default.ShoppingCart, title = "商城页面")
+                PlaceholderScreen(icon = Icons.Default.ShoppingCart, title = "\u5546\u57ce\u9875\u9762")
             }
             composable(Routes.EARN) {
-                PlaceholderScreen(icon = Icons.Default.CurrencyExchange, title = "赚钱页面")
+                PlaceholderScreen(icon = Icons.Default.CurrencyExchange, title = "\u8d5a\u94b1\u9875\u9762")
             }
             composable(Routes.PROFILE) {
-                PlaceholderScreen(icon = Icons.Default.AccountCircle, title = "我的页面")
+                PlaceholderScreen(icon = Icons.Default.AccountCircle, title = "\u6211\u7684\u9875\u9762")
+            }
+            composable(Routes.SEARCH) {
+                // Search is not a bottom tab page, so the bottom bar is hidden while this
+                // destination is current.
+                SearchScreen(
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                )
             }
         }
     }
 }
 
-@androidx.compose.ui.tooling.preview.Preview(showBackground = true, widthDp = 393, heightDp = 852)
+@Preview(showBackground = true, widthDp = 393, heightDp = 852)
 @Composable
-private fun MainScreenPreview() {
-    com.example.hongguolite.ui.theme.HongguoLiteTheme(dynamicColor = false) {
+fun MainScreenPreview() {
+    HongguoLiteTheme(dynamicColor = false) {
         MainScreen()
     }
 }

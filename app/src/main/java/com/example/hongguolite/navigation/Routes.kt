@@ -8,4 +8,5 @@ object Routes {
     const val SHOP = "shop"
     const val EARN = "earn"
     const val PROFILE = "profile"
+    const val SEARCH = "search"
 }
