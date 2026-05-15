@@ -9,7 +9,6 @@ local.properties
 .kotlin/
 build/
 app/build/
-
 # Native build
 .externalNativeBuild/
 .cxx/
@@ -20,3 +19,5 @@ captures/
 # System files
 .DS_Store
 Thumbs.db
+build-log.txt
+AGENTS.MD
